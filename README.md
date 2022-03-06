@@ -55,7 +55,7 @@ winetricks mspatcha
 
 Po dłuższej chwili odpowiednia biblioteka powinna zostać zainstalowana.
 
-Z czcionką Segoe UI jest trudniej, ale po pobraniu plików należy umieścić je w katalogu `~/.fonts`:
+Z czcionką Segoe UI jest trudniej, ale można odnaleźć odpowiednie pliki `segoeui*.ttf` i `segui*.ttf` w zasobach Internetu. Po pobraniu plików należy umieścić je w katalogu `~/.fonts`:
 
 ```shell
 wget https://github.com/mrbvrz/segoe-ui-linux/archive/refs/heads/master.zip -O segoe.zip
@@ -77,3 +77,13 @@ wine AdbeRdr11008_en_US.exe
 Jeśli wszystko zrobiliśmy prawidłowo, to instalator będzie chciał umieścić Adobe Readera w `C:\Program Files` (wersja 32-bitowa) a nie `C:\Program Files (x86)` (wersja 64-bitowa). W innym przypadku patrz [wyżej](#wine-i-winetricks).
 
 Najlepiej od razu wyłączyć automatyczne aktualizacje odpowiednią opcją przy instalacji i jeśli nie zapomnieliśmy zainstalować `mspatcha.dll`, to instalacja powinna się zakończyć sukcesem. Jeśli zapomnieliśmy, to patrz [wyżej](#mspatchadll-i-segoe-ui)
+
+## Wtyczka e-Deklaracje
+
+Ze [strony Ministerstwa Finansów](https://www.podatki.gov.pl/e-deklaracje/wtyczka-do-podpisywania-i-przesylania-danych-xml-z-interaktywnych-formularzy-pdf/) można pobrać wytyczkę (plug-in) do Adobe Readera, służącą do podpisywania i przesyłania danych XML z interaktywnych formularzy PDF. Po pobraniu instalatora (pliku MSI) wtyczki, możemy zainstalować ją przy użyciu Wine:
+
+```shell
+wine msiexec /i e-deklaracje-wtyczka_v9-0-0.msi
+```
+
+Po uruchomieniu instalatora możemy zainstalować wtyczkę zarówno dla Adobe Reader jak i Adobe Acrobat (ustawienie domyślne), bądź w naszym przypadku wybrać tylko Adobe Reader.
