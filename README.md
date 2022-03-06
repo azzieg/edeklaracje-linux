@@ -123,4 +123,16 @@ LC_ALL=pl_PL.UTF-8 wine ".wine/drive_c/Program Files/Adobe/Reader 11.0/Reader/Ac
 
 ## Interaktywne formularze
 
-Interaktywne formularze PDF można pobrać ze [stron Ministerstwa Finansów](https://www.podatki.gov.pl/e-deklaracje/zloz-e-deklaracje-pit/). 
+Interaktywne formularze PDF można pobrać ze [stron Ministerstwa Finansów](https://www.podatki.gov.pl/e-deklaracje/zloz-e-deklaracje-pit/). Po pobraniu można je otworzyć w Adobe Readerze. Jeśli wtyczka e-Deklaracje została prawidłowo zainstalowana (patrz [wyżej](#wtyczka-e-deklaracje)), to po otwarciu formularza w prawej kolumnie rozszerzeń (Extended) powinna się pojawić sekcja E-Deklaracje.
+
+## Wypełnianie i wysyłanie
+
+Jeśli wszystkie kroki zostały wykonane prawidłowo, to w tym momencie powinno być możliwe wypełnienie formularza, pobranie z niego danych XML (warto sprawdzić czy są poprawne, w szczególności czy zawierają polskie znaki, jeśli nie to patrz [wyżej](#locale)), po czym podpisanie ich danymi autoryzacyjnymi, wysłanie, oraz pobranie urzędowego potwierdzenia odbioru (UPO).
+
+Warto wiedzieć, że jeśli mamy numer referencyjny wysłanego dokumentu (32-znakowy hex), to możemy go zaimportować z pliku o następującym formacie:
+
+```
+2022-03-04 - 11:22:33, 0123456789abcdef0123456789abcdef
+```
+
+Data i czas określają moment wysłania dokumentu i zdaje się nie mają większego znaczenia.
