@@ -15,11 +15,14 @@ Windows to komercyjny system operacyjny który wymaga uiszczenia opłat licencyj
 ## W skrócie
 
 * Zainstaluj Wine i Winetricks.
-* Zainstaluj mspatcha.dll oraz czcionkę Segoe UI.
+* Zainstaluj mspatcha.dll.
+* Zainstaluj Wine Gecko.
+* Zainstaluj czcionkę Segoe UI.
 * Zainstaluj 32-bitowy Adobe Reader 11.0.08 (instalatorem dystrybucyjnym).
 * Zainstaluj wtyczkę e-Deklaracje.
 * Skonfiguruj locale.
-* Pobierz formularze, wypełniaj, podpisuj, wysyłaj.
+* Pobierz interaktywne formularze.
+* Wypełniaj, podpisuj, wysyłaj.
 
 ### Ale to nie jest wolne oprogramowanie!
 
@@ -43,11 +46,9 @@ WINEARCH=win32 winecfg
 
 Po pojawieniu się okna konfiguracji można sobie poklikać ustawienia, albo od razu je zamknąć.
 
-## mspatcha.dll i Segoe UI
+## mspatcha.dll
 
-Instalator potrzebuje biblioteki to łatania aplikacji, a sam Adobe Reader potrzebuje czcionki o nazwie Segoe UI.
-
-Pierwsze możemy łatwo zorganizować przy pomocy Winetricks:
+Instalator potrzebuje biblioteki to łatania aplikacji. Na szczęście możemy ją łatwo zainstalować przy pomocy Winetricks:
 
 ```shell
 winetricks mspatcha
@@ -55,7 +56,19 @@ winetricks mspatcha
 
 Po dłuższej chwili odpowiednia biblioteka powinna zostać zainstalowana.
 
-Z czcionką Segoe UI jest trudniej, ale można odnaleźć odpowiednie pliki `segoeui*.ttf` i `segui*.ttf` w zasobach Internetu. Po pobraniu plików należy umieścić je w katalogu `~/.fonts`:
+## Wine Gecko
+
+Do wyświetlania treści HTML potrzebny jest [Wine Gecko](https://wiki.winehq.org/Gecko). Po pobraniu właściwego instalatora MSI możemy go uruchomić:
+
+```shell
+wine msiexec /i wine-gecko-2.47.1-x86.msi
+```
+
+Instalator nie wyświetla żadnego okna, po prostu instaluje odpowiednie pliki.
+
+## Segoe UI
+
+Sam Adobe Reader potrzebuje czcionki o nazwie Segoe UI. Nie jest ona oficjalnie dostępna, ale można odnaleźć odpowiednie pliki `segoeui*.ttf` i `segui*.ttf` w zasobach Internetu. Po pobraniu plików należy umieścić je w katalogu `~/.fonts`:
 
 ```shell
 wget https://github.com/mrbvrz/segoe-ui-linux/archive/refs/heads/master.zip -O segoe.zip
@@ -76,7 +89,11 @@ wine AdbeRdr11008_en_US.exe
 
 Jeśli wszystko zrobiliśmy prawidłowo, to instalator będzie chciał umieścić Adobe Readera w `C:\Program Files` (wersja 32-bitowa) a nie `C:\Program Files (x86)` (wersja 64-bitowa). W innym przypadku patrz [wyżej](#wine-i-winetricks).
 
-Najlepiej od razu wyłączyć automatyczne aktualizacje odpowiednią opcją przy instalacji i jeśli nie zapomnieliśmy zainstalować `mspatcha.dll`, to instalacja powinna się zakończyć sukcesem. Jeśli zapomnieliśmy, to patrz [wyżej](#mspatchadll-i-segoe-ui)
+Najlepiej od razu wyłączyć automatyczne aktualizacje odpowiednią opcją przy instalacji i jeśli nie zapomnieliśmy zainstalować `mspatcha.dll`, to instalacja powinna się zakończyć sukcesem. Jeśli zapomnieliśmy, to patrz [wyżej](#mspatchadll)
+
+Przy pierwszym uruchomieniu Adobe Reader będzie narzekał, że nie może działać w trybie chronionym (protected mode). Nie stanowi to większego problemu, można zaznaczyć opcję by wyłączyć tryb chroniony na zawsze. Przy pierwszym uruchomieniu będzie też konieczne zaakceptowanie licencji. W przypadku nie zainstalowania Wine Gecko treść licencji może być niewidoczna, patrz [wyżej](#wine-gecko).
+
+Jeśli treść w prawej kolumnie jest nieczytelna, to znaczy że czcionka Segoe UI nie została prawidłowo zainstalowana, patrz [wyżej](#segoe-ui).
 
 ## Wtyczka e-Deklaracje
 
@@ -86,4 +103,24 @@ Ze [strony Ministerstwa Finansów](https://www.podatki.gov.pl/e-deklaracje/wtycz
 wine msiexec /i e-deklaracje-wtyczka_v9-0-0.msi
 ```
 
-Po uruchomieniu instalatora możemy zainstalować wtyczkę zarówno dla Adobe Reader jak i Adobe Acrobat (ustawienie domyślne), bądź w naszym przypadku wybrać tylko Adobe Reader.
+Po uruchomieniu instalatora możemy zainstalować wtyczkę zarówno dla Adobe Readera jak i Adobe Acrobata (ustawienie domyślne), bądź w naszym przypadku wybrać tylko Adobe Readera.
+
+## Locale
+
+Jeśli uruchomimy Adobe Readera przy pomocy utworzonego na pulpicie skrótu, a ustawienia regionalne (locale) nie są właściwe, przetwarzanie danych z formularza może być nieprawidłowe. W szczególności, utworzony na podstawie danych z formularza plik XML może być pozbawiony polskich znaków.
+
+Jeśli polskie ustawienia regionalne nie zostały zainstalowane:
+
+```shell
+sudo apt install language-pack-pl
+```
+
+Jeśli normalne ustawienia regionalne są inne niż polskie, można je zmienić uruchamiając Adobe Readera:
+
+```shell
+LC_ALL=pl_PL.UTF-8 wine ".wine/drive_c/Program Files/Adobe/Reader 11.0/Reader/AcroRd32.exe"
+```
+
+## Interaktywne formularze
+
+Interaktywne formularze PDF można pobrać ze [stron Ministerstwa Finansów](https://www.podatki.gov.pl/e-deklaracje/zloz-e-deklaracje-pit/). 
